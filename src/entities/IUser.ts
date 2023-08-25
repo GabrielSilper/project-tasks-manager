@@ -1,5 +1,3 @@
-import { Schema } from 'mongoose';
-
 export type Role = 'admin' | 'user';
 
 export default interface IUser {
