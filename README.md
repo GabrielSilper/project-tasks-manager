@@ -5,25 +5,22 @@ O projeto consiste em criar uma aplicação simples de gestão de tarefas.
 ## Entidades
 
 ### 1.Company
-
-- id - string
-- name - string
+- id
+- name
+- users
+- tasks
 
 ### 2.User
-
-- id - string
-- image - string
-- name - string
-- email - string
-- password - string
-- role - string - "Admin" | "User"
-- company - string - Company.id
+- id
+- name
+- password
+- image
+- email
+- role: 'admin' | 'user';
 
 ### 3.Task
-
-- id - string
-- name - string
-- creator - string - User.id
-- responsibleParties - User[]
-- deliveryDate - Date
-- company - string - Company.id
+- id
+- name
+- taskOwner
+- responsibleParties
+- deliveryDate
