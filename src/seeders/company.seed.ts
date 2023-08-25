@@ -6,13 +6,14 @@ const seed = async () => {
     await mongoose.connect(process.env.DB_URI as string, {
       authSource: 'admin',
     });
-    console.log('Good connection with database');
+    console.log('Sending data to the database...');
   } catch (error) {
     console.log(`You have a trouble with the connection: ${error}`);
   }
 
   await CompanyModel.deleteMany({});
-  await CompanyModel.insertMany([{ name: 'Workmize' }]);
+  await CompanyModel.insertMany([{ name: 'Workmize', users: [], tasks: [] }]);
+  console.log('Data has been successfully inserted!');
 };
 
 seed().then(() => mongoose.connection.close());
