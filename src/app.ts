@@ -3,6 +3,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import 'express-async-errors';
 import userRouter from './routes/user.routes';
+import ErrorMiddleware from './middlewares/ErrorMiddleware';
 
 class App {
   public app: express.Express;
@@ -12,6 +13,7 @@ class App {
     this.app = express();
     this.config();
     this.routes();
+    this.app.use(ErrorMiddleware.handle);
   }
 
   private config(): void {
