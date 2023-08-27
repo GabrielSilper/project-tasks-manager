@@ -11,20 +11,33 @@ export default class TaskService {
     private companyModel = CompanyModel
   ) {}
 
-  async createTask(
+  async create(
     newTask: TaskDTO,
     taskOwner: string
   ): Promise<ServiceData<ITask>> {
     const task = await this.taskModel.create({
-      name: newTask.name,
-      taskOwner: taskOwner,
+      ...newTask,
+      taskOwner,
       responsibleParties: [taskOwner, ...newTask.responsibleParties],
-      deliveryDate: newTask.deliveryDate,
     });
 
-    await this.companyModel
-      .updateOne({ name: 'Workmize' }, { $push: { tasks: task._id } })
-      .populate('tasks');
+    await this.companyModel.updateOne(
+      { name: 'Workmize' },
+      { $push: { tasks: task._id } }
+    );
+
     return { error: null, status: httpStatus.CREATED, data: task };
+  }
+
+  async getAll(taskOwner: string, role: string): Promise<ServiceData<ITask[]>> {
+    let tasks: ITask[];
+
+    if (role === 'admin') {
+      tasks = await this.taskModel.find({});
+    } else {
+      tasks = await this.taskModel.find({ taskOwner });
+    }
+
+    return { error: null, status: httpStatus.OK, data: tasks };
   }
 }

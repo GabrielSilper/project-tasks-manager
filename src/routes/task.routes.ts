@@ -14,4 +14,12 @@ taskRoutes.post(
     taskController.create(req as Request & { user: TokenPayload }, res)
 );
 
+taskRoutes.get(
+  '/',
+  (req, res, next) =>
+    ValidateToken.handle(req as Request & { user: TokenPayload }, res, next),
+  (req, res) =>
+    taskController.getAll(req as Request & { user: TokenPayload }, res)
+);
+
 export default taskRoutes;

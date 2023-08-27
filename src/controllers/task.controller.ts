@@ -9,7 +9,14 @@ export default class TaskController {
     const { body } = req;
     const { _id } = req.user;
 
-    const { status, data } = await this.taskService.createTask(body, _id);
+    const { status, data } = await this.taskService.create(body, _id);
+    res.status(status).json(data);
+  }
+
+  async getAll(req: Request & { user: TokenPayload }, res: Response) {
+    const { _id, role } = req.user;
+
+    const { status, data } = await this.taskService.getAll(_id, role);
     res.status(status).json(data);
   }
 }
