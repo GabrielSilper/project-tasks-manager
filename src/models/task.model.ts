@@ -6,6 +6,7 @@ const TaskSchema = new Schema<ITask>({
   taskOwner: { type: Schema.Types.ObjectId, ref: 'users' },
   responsibleParties: [{ type: Schema.Types.ObjectId, ref: 'users' }],
   deliveryDate: { type: Date, required: true },
+  isDone: { type: Boolean, default: false },
 });
 
 const TaskModel = model<ITask>('Task', TaskSchema);

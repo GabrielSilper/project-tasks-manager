@@ -6,4 +6,5 @@ export default interface ITask {
   taskOwner: Types.ObjectId;
   responsibleParties: Types.ObjectId[];
   deliveryDate: Date;
+  isDone: boolean;
 }
