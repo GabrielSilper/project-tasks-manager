@@ -8,3 +8,9 @@ export default interface ITask {
   deliveryDate: Date;
   isDone: boolean;
 }
+
+export interface TaskDTO {
+  name: string;
+  responsibleParties: Types.ObjectId[];
+  deliveryDate: Date;
+}
