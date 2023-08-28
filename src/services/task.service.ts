@@ -5,12 +5,26 @@ import { TokenPayload } from '../entities/TokenPayload';
 import CompanyModel from '../models/company.model';
 import TaskModel from '../models/task.model';
 import httpStatus from 'http-status';
+import { TASK_NOT_FOUND, TASK_UNAUTHORIZED } from '../entities/ReturnsTypes';
 
 export default class TaskService {
   constructor(
     private taskModel = TaskModel,
     private companyModel = CompanyModel
   ) {}
+
+  private async checkTaskBeforeAction(
+    taskId: string,
+    user: TokenPayload
+  ): Promise<number> {
+    const taskToUpdate = await this.taskModel.findById(taskId);
+    if (!taskToUpdate) return 0;
+
+    const idObject = new Types.ObjectId(user._id);
+    if (user.role === 'admin' || taskToUpdate.taskOwner == idObject) return 1;
+
+    return 2;
+  }
 
   async create(
     newTask: TaskDTO,
@@ -46,19 +60,11 @@ export default class TaskService {
     taskId: string,
     task: TaskDTO
   ): Promise<ServiceData<ITask>> {
-    const taskToUpdate = await this.taskModel.findById(taskId);
+    const typeAction = await this.checkTaskBeforeAction(taskId, user);
 
-    if (!taskToUpdate) {
-      return {
-        error: 'TASK_NOT_FOUND',
-        status: httpStatus.NOT_FOUND,
-        data: { message: 'Task not found' },
-      };
-    }
+    if (!typeAction) return TASK_NOT_FOUND;
 
-    const idObject = new Types.ObjectId(user._id);
-
-    if (user.role === 'admin' || taskToUpdate.taskOwner == idObject) {
+    if (typeAction === 1) {
       const updatedTask = await this.taskModel.findByIdAndUpdate(
         taskId,
         {
@@ -74,10 +80,6 @@ export default class TaskService {
       return { error: null, status: httpStatus.OK, data: updatedTask as ITask };
     }
 
-    return {
-      error: 'TASK_UNAUTHORIZED',
-      status: httpStatus.UNAUTHORIZED,
-      data: { message: 'You are not allowed to update this task' },
-    };
+    return TASK_UNAUTHORIZED;
   }
 }
