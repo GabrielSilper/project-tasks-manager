@@ -1,5 +1,5 @@
 import httpStatus from 'http-status';
-import { Role } from '../entities/IUser';
+import { Role, UserLoginDTO } from '../entities/IUser';
 import { USER_UNAUTHORIZED } from '../entities/ReturnsTypes';
 import { Token } from '../entities/Token';
 import TokenFunctions from '../entities/TokenFunctions';
@@ -14,11 +14,8 @@ export default class LoginService {
     private token: TokenFunctions = new TokenJwt()
   ) {}
 
-  async login(
-    email: string,
-    password: string,
-    role: Role
-  ): Promise<ServiceData<Token>> {
+  async login(loginDTO: UserLoginDTO): Promise<ServiceData<Token>> {
+    const { email, password, role } = loginDTO;
     const user = await this.userModel.findOne({ email });
     if (!user) return USER_UNAUTHORIZED;
 
