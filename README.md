@@ -90,3 +90,26 @@ _caso tudo esteja correto, retorna status 200, com a response:_
 `{ token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0N.EXAMPLE }`
 
 ### Rotas de Tarefas
+
+#### POST /tasks
+
+- Cria uma nova tarefa
+- Body Params:
+  `{ name, responsibleParties, deliveryDate }`
+- todos os campos são obrigatórios.
+- tipo de cada campo:
+  - name: string
+  - responsibleParties: array de ObjectId referencia a entidade User
+    - é necessário passar pelo menos um id de usuário
+  - deliveryDate: string no formato 'YYYY-MM-DD'
+
+_caso algum atributo não seja passado, retorna erro 400, com a response:_
+  
+  `{ message: 'Missing required fields'}`
+
+_o atributo responsibleParties deve ter pelo menos um id de usuário, caso contrário retorna erro 422, com a response:_
+
+`{ message: 'Must have at least one responsible party'}`
+
+
+
