@@ -186,3 +186,17 @@ _caso o token seja válido e com sua permissão, retorna status 200, com a respo
 - Deleta uma tarefa
 - é necessário um token válido para acessar a rota
 - o token enviado vai conter sua permissão de acesso, se for 'admin' pode deletar qualquer tarefa, se for 'user' só pode deletar as tarefas que você criou
+
+_caso o token não seja enviado, retorna erro 401, com a response:_
+
+`{ message: 'Token not found'}`
+
+_caso o token seja inválido, retorna erro 401, com a response:_
+
+`{ message: 'Token must be a valid token'}`
+
+_caso você nao tenha permissão para finalizar a tarefa, retorna erro 401, com a response:_
+
+`{ message: 'You are not allowed to manager this task'}`
+
+_caso o token seja válido e com sua permissão, retorna status 204, sem response_
