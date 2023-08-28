@@ -7,16 +7,24 @@ import TokenJwt from '../utils/TokenJwt';
 import { Token } from '../entities/Token';
 import { TokenPayload } from '../entities/TokenPayload';
 import { UserDTO } from '../entities/IUser';
+import Encrypter from '../entities/Encrypter';
+import Bcrypt from '../utils/Bcrypt';
 
 export default class UserService {
   constructor(
     private userModel = UserModel,
     private companyModel = CompanyModel,
-    private jwtToken: TokenFunctions = new TokenJwt()
+    private jwtToken: TokenFunctions = new TokenJwt(),
+    private bcrypt: Encrypter = new Bcrypt()
   ) {}
 
   async create(newUser: UserDTO): Promise<ServiceData<Token>> {
-    const createdUser = await this.userModel.create(newUser);
+    const encryptedPassword = await this.bcrypt.encrypt(newUser.password);
+
+    const createdUser = await this.userModel.create({
+      ...newUser,
+      password: encryptedPassword,
+    });
     await this.companyModel
       .find({ name: 'Workmize' })
       .updateOne({ $push: { users: createdUser._id } });

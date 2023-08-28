@@ -1,6 +1,6 @@
-import { Request, Router } from 'express';
+import { Router } from 'express';
 import TaskController from '../controllers/task.controller';
-import { RequestWithUser, TokenPayload } from '../entities/TokenPayload';
+import { RequestWithUser } from '../entities/TokenPayload';
 import ValidateToken from '../middlewares/ValidateToken';
 import ValidateTask from '../middlewares/ValidateTask';
 

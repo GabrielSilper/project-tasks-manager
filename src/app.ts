@@ -5,6 +5,7 @@ import 'express-async-errors';
 import userRoutes from './routes/user.routes';
 import ErrorMiddleware from './middlewares/ErrorMiddleware';
 import taskRoutes from './routes/task.routes';
+import loginRoutes from './routes/login.routes';
 
 class App {
   public app: express.Express;
@@ -24,10 +25,11 @@ class App {
 
   private routes(): void {
     this.app.get('/live', (req: Request, res: Response) =>
-      res.send('Manager tasks is live...')
+      res.json({ message: 'Manager tasks is live...' }).end()
     );
     this.app.use('/users', userRoutes);
     this.app.use('/tasks', taskRoutes);
+    this.app.use('/login', loginRoutes);
   }
 
   public start(PORT: string | number): void {

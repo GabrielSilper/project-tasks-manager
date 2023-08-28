@@ -4,8 +4,8 @@ import httpStatus from 'http-status';
 export default class ValidateTask {
   static fields(req: Request, res: Response, next: NextFunction) {
     const { body } = req;
-    const { name, taskOwner, responsibleParties, deliveryDate } = body;
-    if (!name || !taskOwner || !responsibleParties || !deliveryDate) {
+    const { name, responsibleParties, deliveryDate } = body;
+    if (!name || !responsibleParties || !deliveryDate) {
       return res.status(httpStatus.BAD_REQUEST).json({
         message: 'Missing required fields',
       });
