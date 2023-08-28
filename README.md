@@ -116,3 +116,16 @@ _o atributo responsibleParties deve ter pelo menos um id de usuário, caso contr
 - Retorna todas as tarefas
 - é necessário um token válido para acessar a rota
 - o token enviado vai conter sua permissão de acesso, se for 'admin' retorna todas as tarefas, se for 'user' retorna apenas as tarefas que você é responsável
+
+_caso o token não seja enviado, retorna erro 401, com a response:_
+
+`{ message: 'Token not found'}`
+
+_caso o token seja inválido, retorna erro 401, com a response:_
+
+`{ message: 'Token must be a valid token'}`
+
+_caso o token seja válido e com sua permissão, retorna status 200, com a response:_
+
+`{ tasks: [ { id, name, taskOwner, responsibleParties, deliveryDate, isDone } ] }`
+
