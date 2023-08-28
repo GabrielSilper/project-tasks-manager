@@ -11,7 +11,7 @@ export default class ValidateTask {
       });
     }
     if (responsibleParties.length < 1) {
-      return res.status(httpStatus.BAD_REQUEST).json({
+      return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({
         message: 'Must have at least one responsible party',
       });
     }

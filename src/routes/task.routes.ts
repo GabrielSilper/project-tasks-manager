@@ -27,7 +27,7 @@ taskRoutes.put(
 );
 
 taskRoutes.patch(
-  '/:id',
+  '/:id/finish',
   (req, res, next) => ValidateToken.handleWithoutUser(req, res, next),
   (req, res) => taskController.finishTask(req, res),
 );
