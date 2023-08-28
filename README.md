@@ -104,12 +104,15 @@ _caso tudo esteja correto, retorna status 200, com a response:_
   - deliveryDate: string no formato 'YYYY-MM-DD'
 
 _caso algum atributo não seja passado, retorna erro 400, com a response:_
-  
-  `{ message: 'Missing required fields'}`
+
+`{ message: 'Missing required fields'}`
 
 _o atributo responsibleParties deve ter pelo menos um id de usuário, caso contrário retorna erro 422, com a response:_
 
 `{ message: 'Must have at least one responsible party'}`
 
+#### GET /tasks
 
-
+- Retorna todas as tarefas
+- é necessário um token válido para acessar a rota
+- o token enviado vai conter sua permissão de acesso, se for 'admin' retorna todas as tarefas, se for 'user' retorna apenas as tarefas que você é responsável
