@@ -17,6 +17,6 @@ export const USER_UNAUTHORIZED = {
   status: httpStatus.UNAUTHORIZED,
   data: {
     message:
-      'Yours credentials are not valid.\nVerify your email, role and password, and try again',
+      'Yours credentials are not valid. Verify your email, role and password, and try again',
   },
 };
