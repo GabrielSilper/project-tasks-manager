@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 import ITask, { TaskDTO } from '../entities/ITask';
-import ServiceData from '../entities/ServiceData';
+import ServiceData, { Message } from '../entities/ServiceData';
 import { TokenPayload } from '../entities/TokenPayload';
 import CompanyModel from '../models/company.model';
 import TaskModel from '../models/task.model';
@@ -78,6 +78,31 @@ export default class TaskService {
       );
 
       return { error: null, status: httpStatus.OK, data: updatedTask as ITask };
+    }
+
+    return TASK_UNAUTHORIZED;
+  }
+
+  async finishTask(
+    user: TokenPayload,
+    taskId: string
+  ): Promise<ServiceData<Message>> {
+    const typeAction = await this.checkTaskBeforeAction(taskId, user);
+
+    if (!typeAction) return TASK_NOT_FOUND;
+
+    if (typeAction === 1) {
+      const updatedTask = await this.taskModel.findByIdAndUpdate(taskId, {
+        $set: {
+          isDone: true,
+        },
+      });
+
+      return {
+        error: null,
+        status: httpStatus.OK,
+        data: { message: `Task with id ${taskId} is Done` },
+      };
     }
 
     return TASK_UNAUTHORIZED;

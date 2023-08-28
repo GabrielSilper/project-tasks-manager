@@ -36,4 +36,15 @@ export default class TaskController {
     const { status, data } = await this.taskService.update(user, id, body);
     res.status(status).json(data);
   }
+
+  async finishTask(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const user: TokenPayload = this.token.verifyToken(
+      req.headers.authorization as string
+    );
+
+    const { status, data } = await this.taskService.finishTask(user, id);
+    res.status(status).json(data);
+  }
 }

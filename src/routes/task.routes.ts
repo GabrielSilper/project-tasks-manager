@@ -26,4 +26,10 @@ taskRoutes.put(
   (req, res) => taskController.update(req, res)
 );
 
+taskRoutes.patch(
+  '/:id',
+  (req, res, next) => ValidateToken.handleWithoutUser(req, res, next),
+  (req, res) => taskController.finishTask(req, res)
+);
+
 export default taskRoutes;
