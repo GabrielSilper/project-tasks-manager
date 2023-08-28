@@ -7,11 +7,14 @@ import { TokenPayload } from '../entities/TokenPayload';
 import UserModel from '../models/user.model';
 import TokenJwt from '../utils/TokenJwt';
 import ServiceData from '../entities/ServiceData';
+import Encrypter from '../entities/Encrypter';
+import Bcrypt from '../utils/Bcrypt';
 
 export default class LoginService {
   constructor(
     private userModel = UserModel,
-    private token: TokenFunctions = new TokenJwt()
+    private token: TokenFunctions = new TokenJwt(),
+    private bcrypt: Encrypter = new Bcrypt()
   ) {}
 
   async login(loginDTO: UserLoginDTO): Promise<ServiceData<Token>> {
@@ -19,7 +22,7 @@ export default class LoginService {
     const user = await this.userModel.findOne({ email });
     if (!user) return USER_UNAUTHORIZED;
 
-    const isPasswordValid = user.password === password;
+    const isPasswordValid = await this.bcrypt.compare(password, user.password);
     const isRoleValid = user.role === role;
 
     if (!isPasswordValid || !isRoleValid) return USER_UNAUTHORIZED;
