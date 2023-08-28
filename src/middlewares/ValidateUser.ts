@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import httpStatus from 'http-status';
 
-export default class ValidateUSer {
+export default class ValidateUser {
   static fields(req: Request, res: Response, next: NextFunction) {
     const { body } = req;
     const { name, password, image, email, role } = body;

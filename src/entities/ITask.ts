@@ -6,4 +6,11 @@ export default interface ITask {
   taskOwner: Types.ObjectId;
   responsibleParties: Types.ObjectId[];
   deliveryDate: Date;
+  isDone: boolean;
+}
+
+export interface TaskDTO {
+  name: string;
+  responsibleParties: Types.ObjectId[];
+  deliveryDate: Date;
 }

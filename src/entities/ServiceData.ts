@@ -1,4 +1,4 @@
-type Message = { message: string };
+export type Message = { message: string };
 
 type ServiceWrong = {
   error: string;

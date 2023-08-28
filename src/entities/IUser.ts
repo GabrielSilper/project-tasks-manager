@@ -8,3 +8,11 @@ export default interface IUser {
   email: string;
   role: Role;
 }
+
+export interface UserDTO {
+  name: string;
+  password: string;
+  image: string;
+  email: string;
+  role: Role;
+}

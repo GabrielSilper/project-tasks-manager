@@ -2,8 +2,9 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import 'express-async-errors';
-import userRouter from './routes/user.routes';
+import userRoutes from './routes/user.routes';
 import ErrorMiddleware from './middlewares/ErrorMiddleware';
+import taskRoutes from './routes/task.routes';
 
 class App {
   public app: express.Express;
@@ -25,7 +26,8 @@ class App {
     this.app.get('/live', (req: Request, res: Response) =>
       res.send('Manager tasks is live...')
     );
-    this.app.use('/users', userRouter);
+    this.app.use('/users', userRoutes);
+    this.app.use('/tasks', taskRoutes);
   }
 
   public start(PORT: string | number): void {
