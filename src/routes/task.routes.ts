@@ -32,4 +32,10 @@ taskRoutes.patch(
   (req, res) => taskController.finishTask(req, res)
 );
 
+taskRoutes.delete(
+  '/:id',
+  (req, res, next) => ValidateToken.handleWithoutUser(req, res, next),
+  (req, res) => taskController.remove(req, res)
+);
+
 export default taskRoutes;

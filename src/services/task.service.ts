@@ -107,4 +107,22 @@ export default class TaskService {
 
     return TASK_UNAUTHORIZED;
   }
+
+  async remove(user: TokenPayload, taskId: string): Promise<ServiceData<null>> {
+    const typeAction = await this.checkTaskBeforeAction(taskId, user);
+
+    if (!typeAction) return TASK_NOT_FOUND;
+
+    if (typeAction === 1) {
+      await this.taskModel.findByIdAndDelete(taskId);
+
+      return {
+        error: null,
+        status: httpStatus.NO_CONTENT,
+        data: null,
+      };
+    }
+
+    return TASK_UNAUTHORIZED;
+  }
 }
