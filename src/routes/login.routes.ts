@@ -8,7 +8,7 @@ const loginController = new LoginController();
 loginRoutes.post(
   '/',
   (req, res, next) => ValidateLogin.fields(req, res, next),
-  (req, res) => loginController.login(req, res)
+  (req, res) => loginController.login(req, res),
 );
 
 export default loginRoutes;

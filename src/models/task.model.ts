@@ -17,7 +17,7 @@ const TaskSchema = new Schema<ITask>(
         delete ret.__v;
       },
     },
-  }
+  },
 );
 
 const TaskModel = model<ITask>('Task', TaskSchema);

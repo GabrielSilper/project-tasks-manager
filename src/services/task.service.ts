@@ -10,12 +10,12 @@ import { TASK_NOT_FOUND, TASK_UNAUTHORIZED } from '../entities/ReturnsTypes';
 export default class TaskService {
   constructor(
     private taskModel = TaskModel,
-    private companyModel = CompanyModel
+    private companyModel = CompanyModel,
   ) {}
 
   private async checkTaskBeforeAction(
     taskId: string,
-    user: TokenPayload
+    user: TokenPayload,
   ): Promise<number> {
     const taskToUpdate = await this.taskModel.findById(taskId);
     if (!taskToUpdate) return 0;
@@ -28,7 +28,7 @@ export default class TaskService {
 
   async create(
     newTask: TaskDTO,
-    taskOwner: string
+    taskOwner: string,
   ): Promise<ServiceData<ITask>> {
     const task = await this.taskModel.create({
       ...newTask,
@@ -37,7 +37,7 @@ export default class TaskService {
 
     await this.companyModel.updateOne(
       { name: 'Workmize' },
-      { $push: { tasks: task._id } }
+      { $push: { tasks: task._id } },
     );
 
     return { error: null, status: httpStatus.CREATED, data: task };
@@ -55,11 +55,7 @@ export default class TaskService {
     return { error: null, status: httpStatus.OK, data: tasks };
   }
 
-  async update(
-    user: TokenPayload,
-    taskId: string,
-    task: TaskDTO
-  ): Promise<ServiceData<ITask>> {
+  async update( user: TokenPayload, taskId: string, task: TaskDTO): Promise<ServiceData<ITask>> {
     const typeAction = await this.checkTaskBeforeAction(taskId, user);
 
     if (!typeAction) return TASK_NOT_FOUND;
@@ -74,7 +70,7 @@ export default class TaskService {
             responsibleParties: task.responsibleParties,
           },
         },
-        { new: true }
+        { new: true },
       );
 
       return { error: null, status: httpStatus.OK, data: updatedTask as ITask };
@@ -85,14 +81,14 @@ export default class TaskService {
 
   async finishTask(
     user: TokenPayload,
-    taskId: string
+    taskId: string,
   ): Promise<ServiceData<Message>> {
     const typeAction = await this.checkTaskBeforeAction(taskId, user);
 
     if (!typeAction) return TASK_NOT_FOUND;
 
     if (typeAction === 1) {
-      const updatedTask = await this.taskModel.findByIdAndUpdate(taskId, {
+      await this.taskModel.findByIdAndUpdate(taskId, {
         $set: {
           isDone: true,
         },
