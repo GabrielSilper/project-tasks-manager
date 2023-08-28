@@ -27,8 +27,14 @@ O projeto consiste em criar uma aplicação simples de gestão de tarefas.
 - taskOwner
 - responsibleParties
 - deliveryDate
+- isDone
 
 ## API Docs
+
+#### GET /live
+
+- Verifica se o servidor está online
+- Response: `{ message: 'Manager tasks is live...' }`
 
 ### Rotas de Usuários
 
@@ -58,5 +64,29 @@ _caso tudo esteja correto, retorna status 201, com a response:_
 
 ### Rotas de Login
 
-### Rotas de Tarefas
+#### POST /login
 
+- Faz login de um usuário
+- Body Params:
+  `{ email, password, role }`
+- todos os campos são obrigatórios.
+- todos os campos são strings.
+- o campo role só pode ser 'admin' ou 'user'.
+
+_caso algum atributo não seja passado, retorna erro 400, com a response:_
+
+`{ message: 'Missing required fields'}`
+
+_caso o atributo "role" seja diferente de 'admin' ou 'user', retorna erro 422, com a response:_
+
+`{ message: 'Invalid role, must be "admin" or "user"'}`
+
+_caso o login falhe por e-mail, senha e role, retorna erro 401, com a response:_
+
+`{ message: 'Yours credentials are not valid. Verify your email, role and password, and try again'}`
+
+_caso tudo esteja correto, retorna status 200, com a response:_
+
+`{ token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0N.EXAMPLE }`
+
+### Rotas de Tarefas
