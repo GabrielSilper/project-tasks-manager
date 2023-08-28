@@ -1,5 +1,5 @@
 import httpStatus from 'http-status';
-import { Role, UserLoginDTO } from '../entities/IUser';
+import { UserLoginDTO } from '../entities/IUser';
 import { USER_UNAUTHORIZED } from '../entities/ReturnsTypes';
 import { Token } from '../entities/Token';
 import TokenFunctions from '../entities/TokenFunctions';
@@ -14,7 +14,7 @@ export default class LoginService {
   constructor(
     private userModel = UserModel,
     private token: TokenFunctions = new TokenJwt(),
-    private bcrypt: Encrypter = new Bcrypt()
+    private bcrypt: Encrypter = new Bcrypt(),
   ) {}
 
   async login(loginDTO: UserLoginDTO): Promise<ServiceData<Token>> {

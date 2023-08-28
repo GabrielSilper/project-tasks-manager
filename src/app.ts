@@ -9,6 +9,7 @@ import loginRoutes from './routes/login.routes';
 
 class App {
   public app: express.Express;
+
   private db = mongoose;
 
   constructor() {
@@ -25,7 +26,7 @@ class App {
 
   private routes(): void {
     this.app.get('/live', (req: Request, res: Response) =>
-      res.json({ message: 'Manager tasks is live...' }).end()
+      res.json({ message: 'Manager tasks is live...' }).end(),
     );
     this.app.use('/users', userRoutes);
     this.app.use('/tasks', taskRoutes);
@@ -39,7 +40,7 @@ class App {
   public async connectDB(uri: string): Promise<void> {
     try {
       await this.db.connect(uri, { authSource: 'admin' });
-      console.log(`Good connection with database`);
+      console.log('Good connection with database');
     } catch (error) {
       console.log(`You have a trouble with the connection: ${error}`);
     }

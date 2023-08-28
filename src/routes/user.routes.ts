@@ -8,7 +8,7 @@ const userController = new UserController();
 userRoutes.post(
   '/',
   (req, res, next) => ValidateUser.fields(req, res, next),
-  (req, res) => userController.create(req, res)
+  (req, res) => userController.create(req, res),
 );
 
 export default userRoutes;

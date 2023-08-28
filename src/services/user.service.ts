@@ -15,7 +15,7 @@ export default class UserService {
     private userModel = UserModel,
     private companyModel = CompanyModel,
     private jwtToken: TokenFunctions = new TokenJwt(),
-    private bcrypt: Encrypter = new Bcrypt()
+    private bcrypt: Encrypter = new Bcrypt(),
   ) {}
 
   async create(newUser: UserDTO): Promise<ServiceData<Token>> {
