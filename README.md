@@ -129,3 +129,60 @@ _caso o token seja válido e com sua permissão, retorna status 200, com a respo
 
 `{ tasks: [ { id, name, taskOwner, responsibleParties, deliveryDate, isDone } ] }`
 
+#### PATCH /tasks/:id/finish
+
+- Finaliza uma tarefa
+- é necessário um token válido para acessar a rota
+- o token enviado vai conter sua permissão de acesso, se for 'admin' pode finalizar qualquer tarefa, se for 'user' só pode finalizar as tarefas que você criou
+
+_caso o token não seja enviado, retorna erro 401, com a response:_
+
+`{ message: 'Token not found'}`
+
+_caso o token seja inválido, retorna erro 401, com a response:_
+
+`{ message: 'Token must be a valid token'}`
+
+_caso você nao tenha permissão para finalizar a tarefa, retorna erro 401, com a response:_
+
+`{ message: 'You are not allowed to manager this task'}`
+
+_caso o token seja válido e com sua permissão, retorna status 200, com a response:_
+
+`{ message: 'Task with id ####### is Done' }`
+
+#### PUT /tasks/:id
+
+- Atualiza uma tarefa
+- é necessário um token válido para acessar a rota
+- o token enviado vai conter sua permissão de acesso, se for 'admin' pode atualizar qualquer tarefa, se for 'user' só pode atualizar as tarefas que você criou
+- Body Params:
+  `{ name, responsibleParties, deliveryDate }`
+- tipo de cada campo:
+  - name: string
+  - responsibleParties: array de ObjectId referencia a entidade User
+    - é necessário passar pelo menos um id de usuário
+  - deliveryDate: string no formato 'YYYY-MM-DD'
+- todos os campos são opcionais
+
+_caso o token não seja enviado, retorna erro 401, com a response:_
+
+`{ message: 'Token not found'}`
+
+_caso o token seja inválido, retorna erro 401, com a response:_
+
+`{ message: 'Token must be a valid token'}`
+
+_caso você nao tenha permissão para finalizar a tarefa, retorna erro 401, com a response:_
+
+`{ message: 'You are not allowed to manager this task'}`
+
+_caso o token seja válido e com sua permissão, retorna status 200, com a response:_
+
+`{ id, name, taskOwner, responsibleParties, deliveryDate, isDone }`
+
+#### DELETE /tasks/:id
+
+- Deleta uma tarefa
+- é necessário um token válido para acessar a rota
+- o token enviado vai conter sua permissão de acesso, se for 'admin' pode deletar qualquer tarefa, se for 'user' só pode deletar as tarefas que você criou
