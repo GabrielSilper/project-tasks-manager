@@ -2,9 +2,12 @@
   "name": "project-manager-tasks",
   "version": "1.0.0",
   "description": "O projeto consiste em criar uma aplicação simples de gestão de tarefas.",
-  "main": "server.js",
+  "main": "build/server.js",
   "scripts": {
     "build": "tsc",
+    "seed": "node build/seeders/company.seed.js",
+    "prestart": "npm run build && npm run seed",
+    "start": "node build/server.js",
     "predev": "ts-node src/seeders/company.seed.ts",
     "dev": "ts-node-dev src/server.ts",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
