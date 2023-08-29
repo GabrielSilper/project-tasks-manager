@@ -20,7 +20,7 @@ services:
       - 9229:9229
     environment:
       - DB_URI=${DB_URI}
-      - SERVER_PORT=3001
+      - PORT=3001
       - JWT_SECRET=${JWT_SECRET}
     volumes:
       - ./:/usr/app
