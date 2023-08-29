@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "seed": "node build/seeders/company.seed.js",
-    "prestart": "npm run build && npm run seed",
+    "prestart": "npm run seed",
     "start": "node build/server.js",
     "predev": "ts-node src/seeders/company.seed.ts",
     "dev": "ts-node-dev src/server.ts",
