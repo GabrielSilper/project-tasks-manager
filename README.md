@@ -34,7 +34,7 @@ O projeto consiste em criar uma aplicação simples de gestão de tarefas.
 #### GET /live
 
 - Verifica se o servidor está online
-- Response: `{ message: 'Manager tasks is live...' }`
+- Response: `{ message: 'Tasks manager is live...' }`
 
 ### Rotas de Usuários
 

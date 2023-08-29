@@ -1,5 +1,5 @@
 {
-  "name": "project-manager-tasks",
+  "name": "project-tasks-manager",
   "version": "1.0.0",
   "description": "O projeto consiste em criar uma aplicação simples de gestão de tarefas.",
   "main": "build/server.js",

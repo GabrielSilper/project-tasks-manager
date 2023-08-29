@@ -26,7 +26,7 @@ class App {
 
   private routes(): void {
     this.app.get('/live', (req: Request, res: Response) =>
-      res.json({ message: 'Manager tasks is live...' }).end(),
+      res.json({ message: 'Tasks manager is live...' }).end(),
     );
     this.app.use('/users', userRoutes);
     this.app.use('/tasks', taskRoutes);
