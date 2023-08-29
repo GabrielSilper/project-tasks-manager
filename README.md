@@ -31,6 +31,8 @@ O projeto consiste em criar uma aplicação simples de gestão de tarefas.
 
 ## API Docs
 
+baseURL: https://project-tasks-manager-production.up.railway.app/
+
 #### GET /live
 
 - Verifica se o servidor está online
