@@ -21,7 +21,11 @@ export default class TaskService {
     if (!taskToUpdate) return 0;
 
     const idObject = new Types.ObjectId(user._id);
-    if (user.role === 'admin' || taskToUpdate.taskOwner == idObject) return 1;
+    if (
+      user.role === 'admin' 
+        || taskToUpdate.taskOwner == idObject 
+        || taskToUpdate.responsibleParties.includes(idObject)
+    ) return 1;
 
     return 2;
   }
@@ -43,13 +47,15 @@ export default class TaskService {
     return { error: null, status: httpStatus.CREATED, data: task };
   }
 
-  async getAll(taskOwner: string, role: string): Promise<ServiceData<ITask[]>> {
+  async getAll(userId: string, role: string): Promise<ServiceData<ITask[]>> {
     let tasks: ITask[];
 
     if (role === 'admin') {
       tasks = await this.taskModel.find({});
     } else {
-      tasks = await this.taskModel.find({ taskOwner });
+      tasks = await this.taskModel.find({
+        $or: [{ taskOwner: userId }, { responsibleParties: { $all: [userId] } }],
+      });
     }
 
     return { error: null, status: httpStatus.OK, data: tasks };
