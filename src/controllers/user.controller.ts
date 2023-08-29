@@ -9,4 +9,9 @@ export default class UserController {
     const { status, data } = await this.userService.create(body);
     res.status(status).json(data);
   }
+
+  async getAll(req: Request, res: Response): Promise<void> {
+    const { status, data } = await this.userService.getAll();
+    res.status(status).json(data);
+  }
 }

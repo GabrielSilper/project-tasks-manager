@@ -6,7 +6,7 @@ import httpStatus from 'http-status';
 import TokenJwt from '../utils/TokenJwt';
 import { Token } from '../entities/Token';
 import { TokenPayload } from '../entities/TokenPayload';
-import { UserDTO } from '../entities/IUser';
+import IUser, { UserDTO } from '../entities/IUser';
 import Encrypter from '../entities/Encrypter';
 import Bcrypt from '../utils/Bcrypt';
 
@@ -37,5 +37,11 @@ export default class UserService {
     const token = this.jwtToken.createToken(tokenPayload);
 
     return { error: null, status: httpStatus.CREATED, data: { token } };
+  }
+
+  async getAll(): Promise<ServiceData<IUser[]>> {
+    const users = await this.userModel.find({}, { _id: 1, name: 1 });
+
+    return { error: null, status: httpStatus.OK, data: users };
   }
 }
