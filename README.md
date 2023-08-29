@@ -62,6 +62,23 @@ _caso tudo esteja correto, retorna status 201, com a response:_
 
 `{ token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpva.EXAMPLE }`
 
+#### GET /users
+
+- Retorna todos os usuários
+- é necessário um token válido para acessar a rota
+
+_caso o token não seja enviado, retorna erro 401, com a response:_
+
+`{ message: 'Token not found'}`
+
+_caso o token seja inválido, retorna erro 401, com a response:_
+
+`{ message: 'Token must be a valid token'}`
+
+_caso o token seja válido, retorna status 200, com a response:_
+
+`{ users: [ { id, name } ] }`
+
 ### Rotas de Login
 
 #### POST /login
@@ -102,6 +119,15 @@ _caso tudo esteja correto, retorna status 200, com a response:_
   - responsibleParties: array de ObjectId referencia a entidade User
     - é necessário passar pelo menos um id de usuário
   - deliveryDate: string no formato 'YYYY-MM-DD'
+- é necessário um token válido para acessar a rota
+
+_caso o token não seja enviado, retorna erro 401, com a response:_
+
+`{ message: 'Token not found'}`
+
+_caso o token seja inválido, retorna erro 401, com a response:_
+
+`{ message: 'Token must be a valid token'}`
 
 _caso algum atributo não seja passado, retorna erro 400, com a response:_
 
@@ -115,7 +141,7 @@ _o atributo responsibleParties deve ter pelo menos um id de usuário, caso contr
 
 - Retorna todas as tarefas
 - é necessário um token válido para acessar a rota
-- o token enviado vai conter sua permissão de acesso, se for 'admin' retorna todas as tarefas, se for 'user' retorna apenas as tarefas que você é responsável
+- o token enviado vai conter sua permissão de acesso, se for 'admin' retorna todas as tarefas, se for 'user' retorna apenas as tarefas que você é criador ou responsável
 
 _caso o token não seja enviado, retorna erro 401, com a response:_
 
@@ -133,7 +159,7 @@ _caso o token seja válido e com sua permissão, retorna status 200, com a respo
 
 - Finaliza uma tarefa
 - é necessário um token válido para acessar a rota
-- o token enviado vai conter sua permissão de acesso, se for 'admin' pode finalizar qualquer tarefa, se for 'user' só pode finalizar as tarefas que você criou
+- o token enviado vai conter sua permissão de acesso, se for 'admin' pode finalizar qualquer tarefa, se for 'user' só pode finalizar as tarefas que você criou ou é responsável
 
 _caso o token não seja enviado, retorna erro 401, com a response:_
 
@@ -155,7 +181,7 @@ _caso o token seja válido e com sua permissão, retorna status 200, com a respo
 
 - Atualiza uma tarefa
 - é necessário um token válido para acessar a rota
-- o token enviado vai conter sua permissão de acesso, se for 'admin' pode atualizar qualquer tarefa, se for 'user' só pode atualizar as tarefas que você criou
+- o token enviado vai conter sua permissão de acesso, se for 'admin' pode atualizar qualquer tarefa, se for 'user' só pode atualizar as tarefas que você criou ou é responsável
 - Body Params:
   `{ name, responsibleParties, deliveryDate }`
 - tipo de cada campo:
@@ -185,7 +211,7 @@ _caso o token seja válido e com sua permissão, retorna status 200, com a respo
 
 - Deleta uma tarefa
 - é necessário um token válido para acessar a rota
-- o token enviado vai conter sua permissão de acesso, se for 'admin' pode deletar qualquer tarefa, se for 'user' só pode deletar as tarefas que você criou
+- o token enviado vai conter sua permissão de acesso, se for 'admin' pode deletar qualquer tarefa, se for 'user' só pode deletar as tarefas que você criou ou é responsável
 
 _caso o token não seja enviado, retorna erro 401, com a response:_
 
